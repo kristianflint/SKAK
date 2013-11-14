@@ -1,4 +1,3 @@
-
 import java.util.Stack;
 
 public class MoveGenerator{
@@ -48,6 +47,8 @@ public class MoveGenerator{
     
     
     //Tjek udenfor
+    
+    // KOM SÅ GITHUBBBB
     
      public Stack<Move> generateMoves(Board board, int color) {
         Stack<Move> moves = new Stack<>();
