@@ -15,6 +15,11 @@ public class Board{
         
     }
     
-
+    // http://en.wikipedia.org/wiki/Rules_of_chess#Castling
+    public void castling(Move moveKing, Move moveCastle){
+        board[moveKing.getPositionTo()] = board[moveKing.getPositionFrom()];
+        board[moveCastle.getPositionTo()] = board[moveCastle.getPositionFrom()];
+    }
+    
     
 }

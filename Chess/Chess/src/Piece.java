@@ -13,6 +13,7 @@ public class Piece{
     
     /**
      * Used for promotion(s)
+     * @param type
      */
     public void setType(int type) {
         this.type = type;
