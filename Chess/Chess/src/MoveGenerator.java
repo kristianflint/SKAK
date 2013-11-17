@@ -52,7 +52,7 @@ public class MoveGenerator{
     
     // KOM SÅ GITHUBBBB
     
-     public Stack<Move> generateMoves(Board board, int color) {
+     public Stack<Move> generateMoves(Board board, boolean player) {
         Stack<Move> moves = new Stack<>();
         
         // Calculate Moves
