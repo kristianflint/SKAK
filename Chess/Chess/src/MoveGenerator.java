@@ -1,6 +1,24 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class MoveGenerator{
+    
+    /**
+     * Generates moves on a Board Object
+     * 
+     *  1 = White Pawn(s)
+     *  2 = White Rook(s)
+     *  3 = White Knight(s)
+     *  4 = White Bishop(s)
+     *  5 = White Queeen
+     *  6 = White King
+     *  7 = Black Pawn(s)
+     *  8 = Black Rook(s)
+     *  9 = Black Knight(s)
+     * 10 = Black Bishop(s)
+     * 11 = Black Queen
+     * 12 = Black King
+     */
 
     int[] knightMoves={   0x21,    // two up one right
                           0x1F,    // two up one left
@@ -57,16 +75,20 @@ public class MoveGenerator{
         
         // Calculate Moves
         // skal man måske lave offsets for både hvid og sort? som ligesom vender så de passer? :p
-        for(int a=0;a<board.PiecesBlack.size();a++){
+        if (player) {
+            for(int a=0;a<board.PiecesBlack.size();a++){
+                if (board.PiecesBlack.get(a).getType() == 12) {
+                    int currentPosition = board.PiecesBlack.get(a).getPosition();
+                    for (Integer offset : kingMoves) {
+                        if (((currentPosition+offset) & 0x88) == 0){
+                            moves.add(new Move(currentPosition,(currentPosition+offset)));
+                        }
+                    }
+                }
+            }
         }
         
         return moves;
     }
      
-   
-     public static void main(String[] args) {
-         MoveGenerator test = new MoveGenerator();
-         Board testBoard = new Board();
-         // Set up board values for test
-     }
 }
