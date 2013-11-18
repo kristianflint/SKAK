@@ -42,6 +42,8 @@ public class MoveGenerator{
     return true;
     }
     //Funktion som også tjekker i forhold til andres brikker
+    //  Den funktion skal også tage højde for en passant (hvis nu Boardet kan huske om det var der)
+    
     //funktion som tjekker den er indenfor pladen
     //tjek om den slår sin egen brik.
     
@@ -50,7 +52,7 @@ public class MoveGenerator{
     
     // KOM SÅ GITHUBBBB
     
-     public Stack<Move> generateMoves(Board board, int color) {
+     public Stack<Move> generateMoves(Board board, boolean player) {
         Stack<Move> moves = new Stack<>();
         
         // Calculate Moves
