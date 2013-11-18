@@ -62,6 +62,11 @@ public class MoveGenerator{
         
         return moves;
     }
-    
-
+     
+   
+     public static void main(String[] args) {
+         MoveGenerator test = new MoveGenerator();
+         Board testBoard = new Board();
+         // Set up board values for test
+     }
 }
