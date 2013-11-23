@@ -81,10 +81,11 @@ public class MoveGenerator {
                             System.out.println("hej");
                             /** Own piece do nothing */ } 
                         else if (nextPosContains > 7) {
-                            System.out.println("hejhej");
+                            System.out.print("hejhej");
                             Piece pieceToCapture = null;
                             for (int a=0;a<board.PiecesBlack.size();a++){
                                     if (board.PiecesBlack.get(a).position == nextPos){
+                                        System.out.println(" inside generate captureMove");
                                         pieceToCapture = board.PiecesBlack.get(a);
                                         a=100; // break for loop
                                         }

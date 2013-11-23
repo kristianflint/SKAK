@@ -50,7 +50,7 @@ public class MoveGeneratorTest {
 
         // Set up board values for test
         int[] testboarddata = {
-            7, 7, 7, 8, 6, 1, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
+            7, 7, 7, 1, 6, 8, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
@@ -61,23 +61,34 @@ public class MoveGeneratorTest {
         };
 
         Piece wking = new Piece(6, 4);
-        Piece bpawn = new Piece(8, 3);
+        Piece bpawn = new Piece(8, 5);
         ArrayList<Piece> whites = new ArrayList<>(); whites.add(wking);
         ArrayList<Piece> blacks = new ArrayList<>(); blacks.add(bpawn);
         board.board = testboarddata; board.PiecesWhite = whites; board.PiecesBlack = blacks;
         
         Stack<Move> expResult = new Stack<>();  
-        //Move move1 = new Move(4, 5);
-        Move move2 = new Move(4, 3, new Piece(6, 4));Move move3 = new Move(4, 19,new Piece(6, 4));Move move4 = new Move(4, 20,new Piece(6, 4));Move move5 = new Move(4, 21,new Piece(6, 4));
-        //expResult.add(move1);
+        CaptureMove move2 = new CaptureMove(4, 5, new Piece(6, 4),new Piece(8,5));Move move3 = new Move(4, 19,new Piece(6, 4));Move move4 = new Move(4, 20,new Piece(6, 4));Move move5 = new Move(4, 21,new Piece(6, 4));
         expResult.add(move2);expResult.add(move3);expResult.add(move4);expResult.add(move5);
 
         Stack<Move> result = instance.generateMoves(board, player);
         
-        int b = expResult.size();
+        //CaptureMove expC = (CaptureMove)expResult.pop();
+        //CaptureMove resC = (CaptureMove)result.pop();
+        
+        
+       
+        int b = expResult.size()-1;
         for(int a=0;a<b;a++) {
             Move expRes = expResult.pop();
             Move res = result.pop();
+            if (res instanceof CaptureMove) {
+                CaptureMove expResC = (CaptureMove)expRes;
+                CaptureMove resC = (CaptureMove)res;
+                assertEquals(expResC.pieceToMove.position, resC.pieceToMove.position);
+                assertEquals(expResC.pieceToMove.type, resC.pieceToMove.type);
+                assertEquals(expResC.pieceToCapture.position, resC.pieceToCapture.position);
+                assertEquals(expResC.pieceToCapture.type, resC.pieceToCapture.type);
+            }
             assertEquals(expRes.positionFrom, res.positionFrom);
             assertEquals(expRes.positionTo, res.positionTo);
         }
