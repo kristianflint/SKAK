@@ -67,23 +67,34 @@ public class MoveGenerator {
         // if white : 
         if (player) {
         
-        for (int a = 0; a < board.PiecesWhite.size(); a++) {
-            int currentType = board.PiecesWhite.get(a).getType();
+        for (int index = 0; index < board.PiecesWhite.size(); index++) {
+            Piece currentPiece = board.PiecesWhite.get(index);
+            int currentType = board.PiecesWhite.get(index).getType();
             // Generates White King Moves
             if (currentType == 6) { // (12|6)) { // if its a king
-                int currentPos = board.PiecesWhite.get(a).getPosition();
+                int currentPos = board.PiecesWhite.get(index).getPosition();
                 for (Integer offset : kingMoves) {
                     if (((currentPos + offset) & 0x88) == 0) { // Piece is inside the board!
                         int nextPosContains = board.board[(currentPos + offset)];
                         int nextPos = currentPos + offset;
                         if (nextPosContains < 7) {
+                            System.out.println("hej");
                             /** Own piece do nothing */ } 
                         else if (nextPosContains > 7) {
-                            //nextPos
-                            //ArrayList
+                            System.out.println("hejhej");
+                            Piece pieceToCapture = null;
+                            for (int a=0;a<board.PiecesBlack.size();a++){
+                                    if (board.PiecesBlack.get(a).position == nextPos){
+                                        pieceToCapture = board.PiecesBlack.get(a);
+                                        a=100; // break for loop
+                                        }
+                                }
+                            moves.add(new CaptureMove(currentPos, nextPos, currentPiece, pieceToCapture));
                             }
+                        // lav castling move her :O
                         else {
-                            moves.add(new Move(currentPos, (currentPos + offset))); }
+                            System.out.println("hejhejhej");
+                            moves.add(new Move(currentPos, nextPos, currentPiece)); }
                     }
                 }
             }

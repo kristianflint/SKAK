@@ -50,7 +50,7 @@ public class MoveGeneratorTest {
 
         // Set up board values for test
         int[] testboarddata = {
-            7, 7, 7, 7, 6, 1, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
+            7, 7, 7, 8, 6, 1, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
@@ -60,14 +60,15 @@ public class MoveGeneratorTest {
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
         };
 
-        Piece bking = new Piece(6, 4);
-
-        ArrayList<Piece> whites = new ArrayList<>(); whites.add(bking);
-        board.board = testboarddata; board.PiecesWhite = whites;
+        Piece wking = new Piece(6, 4);
+        Piece bpawn = new Piece(8, 3);
+        ArrayList<Piece> whites = new ArrayList<>(); whites.add(wking);
+        ArrayList<Piece> blacks = new ArrayList<>(); blacks.add(bpawn);
+        board.board = testboarddata; board.PiecesWhite = whites; board.PiecesBlack = blacks;
         
         Stack<Move> expResult = new Stack<>();  
         //Move move1 = new Move(4, 5);
-        Move move2 = new Move(4, 3);Move move3 = new Move(4, 19);Move move4 = new Move(4, 20);Move move5 = new Move(4, 21);
+        Move move2 = new Move(4, 3, new Piece(6, 4));Move move3 = new Move(4, 19,new Piece(6, 4));Move move4 = new Move(4, 20,new Piece(6, 4));Move move5 = new Move(4, 21,new Piece(6, 4));
         //expResult.add(move1);
         expResult.add(move2);expResult.add(move3);expResult.add(move4);expResult.add(move5);
 
