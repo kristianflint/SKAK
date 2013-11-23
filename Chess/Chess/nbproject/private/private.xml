@@ -5,10 +5,9 @@
         <group>
             <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/src/Piece.java</file>
             <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/src/Move.java</file>
-            <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/src/Evaluator.java</file>
             <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/src/MinMax.java</file>
             <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/src/Board.java</file>
-            <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/test/BoardTest.java</file>
+            <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/test/MoveGeneratorTest.java</file>
             <file>file:/Users/troelshenningsen/NetBeansProjects/SKAK/Chess/Chess/src/MoveGenerator.java</file>
         </group>
     </open-files>
