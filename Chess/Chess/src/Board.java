@@ -51,6 +51,7 @@ public class Board{
     int BLACK_QUEEN = 0x0F;
     int BLACK_BISHOP = 0x0D;
     int BLACK_KNIGHT = 0x0A;
+    int BLACK_PAWN = 0x09;
     
     boolean enPassant;      // der kan vel kun være 1 mulig en passant af gangen?
     int enPassantPosition;
@@ -60,14 +61,17 @@ public class Board{
         Piece p0 = new Piece(BLACK_QUEEN, 3);
         Piece p1 = new Piece(BLACK_QUEEN, 2);
         Piece p2 = new Piece(BLACK_KNIGHT, 1);
+        Piece p3 = new Piece(BLACK_PAWN, 13);
         
         PiecesWhite.add(p0);
         PiecesWhite.add(p1);
         PiecesWhite.add(p2);
+        PiecesWhite.add(p3);
         
         board[1] = BLACK_KNIGHT;
         board[2] = BLACK_BISHOP;
         board[3] = BLACK_QUEEN;
+        board[13] = BLACK_PAWN;
         
     }
     
