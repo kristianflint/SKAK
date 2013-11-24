@@ -2,6 +2,7 @@ public class Piece{
     int type;
     int position;   
     
+    
     public Piece(int type, int position) {
         this.type = type;
         this.position = position;
