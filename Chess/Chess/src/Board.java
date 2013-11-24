@@ -47,24 +47,88 @@ public class Board{
     boolean enPassant;      // der kan vel kun være 1 mulig en passant af gangen?
     int enPassantPosition;
     
+    public int returnPiecesSize(int color) {  //0 = white 1 = black
+             
+        switch (color) {
+            case 0:  
+                return PiecesWhite.size();
+            case 1:  
+                return PiecesBlack.size();              
+        }
+        return 0;
+    }
+      public Piece getPiece(int index, int color) {  //0 = white 1 = black
+             
+        switch (color) {
+            case 0:  
+                return PiecesWhite.get(index);
+            case 1:  
+                return PiecesBlack.get(index);              
+        }
+        return PiecesBlack.get(0); //need better error check, return emtpy piece
+    }      
     public Board() {
+        String hex = "ff";
+          
+        Piece p0 = new Piece(BLACK_QUEEN, Integer.parseInt("3", 16));
+        Piece p1 = new Piece(BLACK_BISHOP, Integer.parseInt("2", 16));
+        Piece p2 = new Piece(BLACK_KNIGHT, Integer.parseInt("1", 16));
+        Piece p11 = new Piece(BLACK_ROOK, Integer.parseInt("0", 16));
         
-        Piece p0 = new Piece(BLACK_QUEEN, 3);
-        Piece p1 = new Piece(BLACK_QUEEN, 2);
-        Piece p2 = new Piece(BLACK_KNIGHT, 1);
-        Piece p3 = new Piece(BLACK_PAWN, 19);
+        Piece p12 = new Piece(BLACK_KING, Integer.parseInt("4", 16));
+        Piece p13 = new Piece(BLACK_BISHOP, Integer.parseInt("5", 16));
+        Piece p14 = new Piece(BLACK_KNIGHT, Integer.parseInt("6", 16));
+        Piece p15 = new Piece(BLACK_ROOK, Integer.parseInt("7", 16));     
         
-        PiecesWhite.add(p0);
-        PiecesWhite.add(p1);
-        PiecesWhite.add(p2);
-        PiecesWhite.add(p3);
+        Piece p3 = new Piece(BLACK_PAWN, Integer.parseInt("10", 16));
+        Piece p4 = new Piece(BLACK_PAWN, Integer.parseInt("11", 16));
+        Piece p5 = new Piece(BLACK_PAWN, Integer.parseInt("12", 16));
+        Piece p6 = new Piece(BLACK_PAWN, Integer.parseInt("13", 16));
+        Piece p7 = new Piece(BLACK_PAWN, Integer.parseInt("14", 16));
+        Piece p8 = new Piece(BLACK_PAWN, Integer.parseInt("15", 16));
+        Piece p9 = new Piece(BLACK_PAWN, Integer.parseInt("16", 16));
+        Piece p10 = new Piece(BLACK_PAWN, Integer.parseInt("17", 16));
         
-        board[1] = BLACK_KNIGHT;
-        board[2] = BLACK_BISHOP;
-        board[3] = BLACK_QUEEN;
-        board[19] = BLACK_PAWN;
+        board[Integer.parseInt("0", 16)] = BLACK_ROOK;
+        board[Integer.parseInt("1", 16)] = BLACK_KNIGHT;
+        board[Integer.parseInt("2", 16)] = BLACK_BISHOP;
+        board[Integer.parseInt("3", 16)] = BLACK_QUEEN;
+
+        board[Integer.parseInt("4", 16)] = BLACK_KING;
+        board[Integer.parseInt("5", 16)] = BLACK_BISHOP;
+        board[Integer.parseInt("6", 16)] = BLACK_KNIGHT;
+        board[Integer.parseInt("7", 16)] = BLACK_ROOK;
+        
+        board[Integer.parseInt("10", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("11", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("12", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("13", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("14", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("15", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("16", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("17", 16)] = BLACK_PAWN;        
+        
+        
+        PiecesBlack.add(p0);
+        PiecesBlack.add(p1);
+        PiecesBlack.add(p2);
+        PiecesBlack.add(p3);
+        PiecesBlack.add(p4);
+        PiecesBlack.add(p5);
+        PiecesBlack.add(p6);
+        PiecesBlack.add(p7);
+        PiecesBlack.add(p8);
+        PiecesBlack.add(p9);
+        PiecesBlack.add(p10);
+        PiecesBlack.add(p11);
+        PiecesBlack.add(p12);
+        PiecesBlack.add(p13);
+        PiecesBlack.add(p14);
+        PiecesBlack.add(p15);
         
     }
+    
+    
     
     //update board og piece
     public void movePiece(Move move) {

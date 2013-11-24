@@ -10,7 +10,7 @@ public class MinMax {
         
         if (maximizingPlayer) {
             Double bestValue = Double.NEGATIVE_INFINITY;
-            Stack<Move> moves = moveGenerator.generateMoves(node, false);
+            Stack<Move> moves = moveGenerator.generateMoves(node, false,0);
             for(Move move : moves) { // skal bare ændres til while loop for at implementere alpha beta :D ?
                 Board newNode = node;
                 newNode.movePiece(move);
@@ -20,7 +20,7 @@ public class MinMax {
             }
         else {
             Double bestValue = Double.POSITIVE_INFINITY;
-            Stack<Move> moves = moveGenerator.generateMoves(node, true);
+            Stack<Move> moves = moveGenerator.generateMoves(node, true,0);
             for(Move move : moves) { // skal bare ændres til while loop for at implementere alpha beta :D ?
                 Board newNode = node;
                 newNode.movePiece(move);

@@ -30,11 +30,20 @@ public class MoveGenerator {
         0x10, // one up
         0x11};     // one up one right
     
-    int BLACK_QUEEN = 0x0F;
-    int BLACK_ROOK = 0x0E;
-    int BLACK_BISHOP = 0x0D;
-    int BLACK_KNIGHT = 0x0A;
-    int BLACK_PAWN = 0x09;
+    static final int BLACK_QUEEN = 0x0F;
+    static final int BLACK_BISHOP = 0x0D;
+    static final int BLACK_KNIGHT = 0x0A;
+    static final int BLACK_PAWN = 0x09;
+    static final int BLACK_ROOK = 0x0E;
+    static final int BLACK_KING = 0x0B;
+    
+    
+    static final int WHITE_PAWN = 0x01;
+    static final int WHITE_KNIGHT = 0x02;
+    static final int WHITE_KING = 0x03;
+    static final int WHITE_BISHOP = 0x05;
+    static final int WHITE_ROOK = 0x06;
+    static final int WHITE_QUEEN = 0x07;
     
     // er de samme som kongens bare med voksende offset :-D 
     int[] queenMoves = {0x01, // one right
@@ -61,7 +70,7 @@ public class MoveGenerator {
         -0x01, // one left
         0x10};    // one up
 
-    int[][] slidingMoves = {queenMoves,bishopMoves,rookMoves,knightMoves,pawnMoves};
+    int[][] allMoves = {queenMoves,bishopMoves,rookMoves,knightMoves,pawnMoves,kingMoves};
     
     int COMP_COLOR = 1; //0 = white 1 = black
         
@@ -88,23 +97,23 @@ public class MoveGenerator {
     
     
     public int[] convertPiceTypeToIntList(int type) {
-        if (type == BLACK_QUEEN){
-            return slidingMoves[0];
+     
+        switch (type) {
+            case BLACK_QUEEN:  
+                return allMoves[0];
+            case BLACK_BISHOP:  
+                return allMoves[1];
+            case BLACK_ROOK:  
+                return allMoves[2];
+            case BLACK_KNIGHT:  
+                return allMoves[3];
+            case BLACK_PAWN:  
+                return allMoves[4];
+            case BLACK_KING:  
+                return allMoves[5];                
         }
-         if (type == BLACK_BISHOP){
-            return slidingMoves[1];
-        }
-         if (type == BLACK_ROOK){
-            return slidingMoves[2];
-        }
-         if (type == BLACK_KNIGHT){
-            return slidingMoves[3];
-        }         
-         if (type == BLACK_PAWN){
-            return slidingMoves[4];
-        }             
-        return slidingMoves[3];
-        //return ((currentPos + offset) & 0x88) == 0;
+        
+        return allMoves[3];
     }
     
     //Funktion som også tjekker i forhold til andres brikker
@@ -123,7 +132,6 @@ public class MoveGenerator {
                 Piece tempPeace = new Piece(CurrPeace.type,CurrPeace.position);
                 if (isValidMove(board, currentPos, offset, tempPeace, isFirst)) {
                     int newpos = currentPos+offset;
-                    //System.out.println( "Newpos:" + Integer.toHexString(newpos));
                     moves.add(new Move(currentPos, newpos,CurrPeace));
                     tempPeace.setPosition(newpos);
                     if(isSliding){
@@ -133,16 +141,15 @@ public class MoveGenerator {
         return moves;
     }
     
-    public Stack<Move> generateMoves(Board board, boolean player) {
+    public Stack<Move> generateMoves(Board board, boolean player, int color) { //0 = white 1 = black
         Stack<Move> moves = new Stack<>();
         
-        for (int index = 0; index < board.PiecesWhite.size(); index++) {
-            Piece currentPiece = board.PiecesWhite.get(index);
+        for (int index = 0; index < board.returnPiecesSize(color); index++) {
+            Piece currentPiece = board.getPiece(index,color);
             for (Integer offset : convertPiceTypeToIntList(currentPiece.type)) {
                 if ((currentPiece.getType() & 0x4) != 0) { // Is sliding pice
                     moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true, true));
                 }else{
-                    //System.out.println("NEWPOS:" + Integer.toHexString(currentPiece.position + offset));
                     moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true,false));
                 }  
             }  
@@ -159,7 +166,7 @@ MoveGenerator tester = new MoveGenerator();
 Board myBoard = new Board();
 Move tempMove;
 
-moves = tester.generateMoves(myBoard, true);
+moves = tester.generateMoves(myBoard, true, 1);
 
 System.out.println("moves.size():" + moves.size());
 while (moves.size() > 0){
