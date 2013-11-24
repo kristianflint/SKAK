@@ -59,10 +59,11 @@ public class MoveGeneratorTest {
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
             7, 7, 7, 7, 7, 7, 7, 7,  7, 7, 7, 7, 7, 7, 7, 7,
         };
-
+        
+        Piece wpawn = new Piece(1,3);
         Piece wking = new Piece(6, 4);
         Piece bpawn = new Piece(8, 5);
-        ArrayList<Piece> whites = new ArrayList<>(); whites.add(wking);
+        ArrayList<Piece> whites = new ArrayList<>(); whites.add(wking); whites.add(wpawn);
         ArrayList<Piece> blacks = new ArrayList<>(); blacks.add(bpawn);
         board.board = testboarddata; board.PiecesWhite = whites; board.PiecesBlack = blacks;
         

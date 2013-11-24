@@ -70,7 +70,38 @@ public class MoveGenerator {
         for (int index = 0; index < board.PiecesWhite.size(); index++) {
             Piece currentPiece = board.PiecesWhite.get(index);
             int currentType = board.PiecesWhite.get(index).getType();
-            // Generates White King Moves
+            
+            // generate white pawn moves
+            if (currentType == 1) { // if its a white pawn
+                int currentPos = board.PiecesWhite.get(index).getPosition();
+                for (Integer offset : pawnMoves) {
+                    if (((currentPos + offset) & 0x88) == 0) { // Piece is inside the board!
+                        int nextPosContains = board.board[(currentPos + offset)];
+                        int nextPos = currentPos + offset;
+                        if (nextPosContains < 7) {
+                            System.out.println("bond");
+                            /** Own piece do nothing */ } 
+                        else if (nextPosContains > 7) {
+                            System.out.print("bondbond");
+                            Piece pieceToCapture = null;
+                            for (int a=0;a<board.PiecesBlack.size();a++){
+                                    if (board.PiecesBlack.get(a).position == nextPos){
+                                        System.out.println(" inside generate captureMove");
+                                        pieceToCapture = board.PiecesBlack.get(a);
+                                        a=100; // break for loop
+                                        }
+                                }
+                            moves.add(new CaptureMove(currentPos, nextPos, currentPiece, pieceToCapture));
+                            }
+                        else {
+                            System.out.println("bondbondbond");
+                            moves.add(new Move(currentPos, nextPos, currentPiece)); }
+                    }
+                }
+            }
+            // end of white pawn moves
+            
+            // generates white King moves
             if (currentType == 6) { // (12|6)) { // if its a king
                 int currentPos = board.PiecesWhite.get(index).getPosition();
                 for (Integer offset : kingMoves) {
@@ -99,6 +130,8 @@ public class MoveGenerator {
                     }
                 }
             }
+            
+            
         }
         }
         // al den samme logik bare for sort
