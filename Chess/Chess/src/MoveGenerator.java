@@ -47,8 +47,8 @@ public class MoveGenerator {
         0x11};     // one up one right
 
     int[] pawnMoves = {0x10, // one up
-        0x11, // one up one right
-        0x0F, // one up one left
+        //0x11, // one up one right
+        //0x0F, // one up one left
         0x20};     // two up
 
     int[] bishopMoves = {-0x0F, // one down one right
@@ -142,19 +142,14 @@ public class MoveGenerator {
                 if ((currentPiece.getType() & 0x4) != 0) { // Is sliding pice
                     moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true, true));
                 }else{
-                    System.out.println("NEWPOS:" + Integer.toHexString(currentPiece.position + offset));
+                    //System.out.println("NEWPOS:" + Integer.toHexString(currentPiece.position + offset));
                     moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true,false));
-                }
-                
+                }  
             }  
         }
-        return moves; //return moves;
-        
+        return moves;
     }
-    
-    
-
-    
+      
            
 public static void main (String[] args) {
 System.out.println( "WHAT!?");
