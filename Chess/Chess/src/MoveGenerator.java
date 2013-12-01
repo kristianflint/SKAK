@@ -55,12 +55,18 @@ public class MoveGenerator {
         0x10, // one up
         0x11};// one up one right
 
-    int[] pawnMoves = {0x10, // one up
+    int[] pawnMovesBLACK = {0x10, // one up
         //0x11, // one up one right
         //0x0F, // one up one left
         //0x20
         };  // two up
-
+    
+    int[] pawnMovesWHITE = {-0x10, // one up
+        //0x11, // one up one right
+        //0x0F, // one up one left
+        //0x20
+        };  // two up
+    
     int[] bishopMoves = {-0x0F, // one down one right
         -0x11, // one down one left
         0x0F, // one up one left
@@ -71,11 +77,11 @@ public class MoveGenerator {
         -0x01, // one left
         0x10};    // one up
 
-    int[][] allMoves = {queenMoves,bishopMoves,rookMoves,knightMoves,pawnMoves,kingMoves};
+    int[][] allMoves = {queenMoves,bishopMoves,rookMoves,knightMoves,pawnMovesBLACK,kingMoves,pawnMovesWHITE};
     
     //int COMP_COLOR = 1; //0 = white 1 = black
         
-    public boolean isValidMove(Board board, int currentPos, int offset, Piece me, boolean isFirst) {
+    public boolean isValidMove(Board board, int currentPos, int offset, Piece me, boolean isFirst, int color) {
         int lastMove = currentPos - offset;
 
         if (!isFirst){  
@@ -88,11 +94,18 @@ public class MoveGenerator {
             }
         }
         if (((currentPos + offset) & 0x88) == 0) { // inside board
-            if ((board.board[(currentPos + offset)] & 0x8) != 0) { // det næste move er en af vores egne
+            
+            if ( color == 1 && ((board.board[(currentPos + offset)] & 0x8) != 0)) { // det næste move er en af vores egne
                 return false;
-            }      
-             return true;
+            } 
+            
+            if ( color == 0 && ((board.board[(currentPos + offset)] & 0x8) == 0) && (board.board[(currentPos + offset)] != 0)) { // det næste move er en af vores egne
+                return false;
+            }  
+            
+            return true;
          }
+        
          return false;
     }
     
@@ -113,8 +126,9 @@ public class MoveGenerator {
             case WHITE_KNIGHT:
                 return allMoves[3];
             case BLACK_PAWN:  
-            case WHITE_PAWN: 
                 return allMoves[4];
+            case WHITE_PAWN: 
+                return allMoves[6];
             case BLACK_KING:  
             case WHITE_KING:  
                 return allMoves[5];                
@@ -132,17 +146,17 @@ public class MoveGenerator {
     // KOM SÅ GITHUBBBB
     
     
-    public Stack<Move> generateMovesPiece(Board board, boolean player, Piece CurrPeace, int offset, boolean isFirst, boolean isSliding) {
+    public Stack<Move> generateMovesPiece(Board board, boolean player, Piece CurrPeace, int offset, boolean isFirst, boolean isSliding, int color) { //0 = white 1 = black
         Stack<Move> moves = new Stack<>();
       
                 int currentPos = CurrPeace.getPosition();
                 Piece tempPeace = new Piece(CurrPeace.type,CurrPeace.position);
-                if (isValidMove(board, currentPos, offset, tempPeace, isFirst)) {
+                if (isValidMove(board, currentPos, offset, tempPeace, isFirst, color)) {
                     int newpos = currentPos+offset;
                     moves.add(new Move(currentPos, newpos,CurrPeace));
                     tempPeace.setPosition(newpos);
                     if(isSliding){
-                        moves.addAll(generateMovesPiece(board, player,tempPeace, offset, false, true));
+                        moves.addAll(generateMovesPiece(board, player,tempPeace, offset, false, true, color));
                     }
                 }
         return moves;
@@ -151,13 +165,14 @@ public class MoveGenerator {
     public Stack<Move> generateMoves(Board board, boolean player, int color) { //0 = white 1 = black
         Stack<Move> moves = new Stack<>();
         
+        System.out.println("returnPiecesSize():" + board.returnPiecesSize(color));
         for (int index = 0; index < board.returnPiecesSize(color); index++) {
             Piece currentPiece = board.getPiece(index,color);
             for (Integer offset : convertPiceTypeToIntList(currentPiece.type)) {
                 if ((currentPiece.getType() & 0x4) != 0) { // Is sliding pice
-                    moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true, true));
+                    moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true, true, color));
                 }else{
-                    moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true,false));
+                    moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true,false, color));
                 }  
             }  
         }
@@ -166,14 +181,14 @@ public class MoveGenerator {
       
            
 public static void main (String[] args) {
-System.out.println( "WHAT!?");
+System.out.println( "WHAT!?" + (BLACK_PAWN & 0x8));
 Stack<Move> moves = new Stack();
         
 MoveGenerator tester = new MoveGenerator();
 Board myBoard = new Board();
 Move tempMove;
 
-moves = tester.generateMoves(myBoard, true, 1);
+moves = tester.generateMoves(myBoard, true, 0);
 
 System.out.println("moves.size():" + moves.size());
 while (moves.size() > 0){
