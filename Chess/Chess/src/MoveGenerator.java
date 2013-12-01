@@ -175,6 +175,7 @@ public class MoveGenerator {
                 }  
             }  
         }
+        
         return moves;
     }
       
@@ -187,7 +188,7 @@ MoveGenerator tester = new MoveGenerator();
 Board myBoard = new Board();
 Move tempMove;
 
-moves = tester.generateMoves(myBoard, true, 0);
+moves = tester.generateMoves(myBoard, true, 1);
 
 System.out.println("moves.size():" + moves.size());
 while (moves.size() > 0){

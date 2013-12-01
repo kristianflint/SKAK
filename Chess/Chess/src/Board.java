@@ -66,8 +66,9 @@ public class Board{
                 return PiecesBlack.get(index);              
         }
         return PiecesBlack.get(0); //need better error check, return emtpy piece
-    }      
-    public Board() {
+    }  
+      
+    public void populateMe() {
         String hex = "ff";
           
         Piece p0 = new Piece(BLACK_QUEEN, Integer.parseInt("3", 16));
@@ -187,14 +188,39 @@ public class Board{
         
     }
     
-    
+    //Print Board
+    public void Print() {
+        int peter = 0;
+      for(int row = 0; row < 128; row++){
+         peter++;
+        if(board[row] < 10) System.out.print(" ");
+        System.out.print(board[row]);
+        System.out.print(", ");
+        if (peter==16){
+            System.out.println("");
+            peter = 0;
+        }
+      }
+    } 
     
     //update board og piece
     public void movePiece(Move move) {
         board[move.getPositionTo()] = board[move.getPositionFrom()];
+        board[move.getPositionFrom()] = 0;
         
+        // opdater piecelisten
+        int pos = move.getPositionFrom();
+        
+        for (Piece pc : PiecesBlack) {
+            if(pc.getPosition()==pos) {pc.position=(move.positionTo);
+            System.out.println("hej");}
+        }
+        for (Piece pc : PiecesWhite) {
+            if(pc.getPosition()==pos) {pc.position=(move.positionTo);
+            System.out.println("hej");}
+        }
         // Der skal tages højde for En passant på en eller anden måde
-        if (enPassant) removeEnPassant();
+        //if (enPassant) removeEnPassant();
         // if you just made en passant enabling move turn it on here
     }
     
@@ -205,6 +231,31 @@ public class Board{
         
         if (enPassant) removeEnPassant();
         // if you just made en passant enabling move turn it on here
+    }
+    
+    public Board copyMe() {
+        Board cp = new Board();
+        ArrayList<Piece> cpWhite = new ArrayList<>();
+        ArrayList<Piece> cpBlack = new ArrayList<>();
+        int[] cpB = new int[128];
+                
+        for (Piece pc : PiecesBlack) {
+            cpBlack.add(pc);
+        }
+        
+        for (Piece pc : PiecesWhite) {
+            cpWhite.add(pc);
+        }
+        
+        for (int index=0; index<board.length;index++) {
+            cpB[index]=board[index];
+        }
+        
+        cp.PiecesBlack=cpBlack;
+        cp.PiecesWhite=cpWhite;
+        cp.board=cpB;
+        
+        return cp;
     }
 
     public boolean enPassantPossible() {
