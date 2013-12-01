@@ -53,12 +53,13 @@ public class MoveGenerator {
         -0x01, // one left
         0x0F, // one up one left
         0x10, // one up
-        0x11};     // one up one right
+        0x11};// one up one right
 
     int[] pawnMoves = {0x10, // one up
         //0x11, // one up one right
         //0x0F, // one up one left
-        0x20};     // two up
+        //0x20
+        };  // two up
 
     int[] bishopMoves = {-0x0F, // one down one right
         -0x11, // one down one left
@@ -72,7 +73,7 @@ public class MoveGenerator {
 
     int[][] allMoves = {queenMoves,bishopMoves,rookMoves,knightMoves,pawnMoves,kingMoves};
     
-    int COMP_COLOR = 1; //0 = white 1 = black
+    //int COMP_COLOR = 1; //0 = white 1 = black
         
     public boolean isValidMove(Board board, int currentPos, int offset, Piece me, boolean isFirst) {
         int lastMove = currentPos - offset;
@@ -99,20 +100,26 @@ public class MoveGenerator {
     public int[] convertPiceTypeToIntList(int type) {
      
         switch (type) {
-            case BLACK_QUEEN:  
+            case BLACK_QUEEN: 
+            case WHITE_QUEEN: 
                 return allMoves[0];
             case BLACK_BISHOP:  
+            case WHITE_BISHOP:
                 return allMoves[1];
-            case BLACK_ROOK:  
+            case BLACK_ROOK:
+            case WHITE_ROOK:
                 return allMoves[2];
-            case BLACK_KNIGHT:  
+            case BLACK_KNIGHT:
+            case WHITE_KNIGHT:
                 return allMoves[3];
             case BLACK_PAWN:  
+            case WHITE_PAWN: 
                 return allMoves[4];
             case BLACK_KING:  
+            case WHITE_KING:  
                 return allMoves[5];                
         }
-        
+        //BIIIGG ERROR!!
         return allMoves[3];
     }
     
