@@ -87,18 +87,18 @@ public class MoveGenerator {
         if (!isFirst){  
             if (((lastMove) & 0x88) == 0) { // inside board
                 if((board.board[lastMove] != 0) && (me.getPosition() == lastMove) ){// der stod en på sidste move
-                    System.out.println( "me.getPosition()" + me.getPosition());
-                    System.out.println( "lastMove" + lastMove);
                     return false;
                 }
             }
         }
         if (((currentPos + offset) & 0x88) == 0) { // inside board
             
+            //BLACK
             if ( color == 1 && ((board.board[(currentPos + offset)] & 0x8) != 0)) { // det næste move er en af vores egne
                 return false;
             } 
             
+            //WHITE
             if ( color == 0 && ((board.board[(currentPos + offset)] & 0x8) == 0) && (board.board[(currentPos + offset)] != 0)) { // det næste move er en af vores egne
                 return false;
             }  
@@ -165,7 +165,6 @@ public class MoveGenerator {
     public Stack<Move> generateMoves(Board board, boolean player, int color) { //0 = white 1 = black
         Stack<Move> moves = new Stack<>();
         
-        System.out.println("returnPiecesSize():" + board.returnPiecesSize(color));
         for (int index = 0; index < board.returnPiecesSize(color); index++) {
             Piece currentPiece = board.getPiece(index,color);
             for (Integer offset : convertPiceTypeToIntList(currentPiece.type)) {
