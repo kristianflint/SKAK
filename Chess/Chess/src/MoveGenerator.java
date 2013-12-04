@@ -56,16 +56,16 @@ public class MoveGenerator {
         0x11};// one up one right
 
     int[] pawnMovesBLACK = {0x10, // one up
-        //0x11, // one up one right
-        //0x0F, // one up one left
-        //0x20
-        };  // two up
+        0x11, // one up one right
+        0x0F, // one up one left
+        0x20  // two up
+        };  
     
     int[] pawnMovesWHITE = {-0x10, // one up
-        //0x11, // one up one right
-        //0x0F, // one up one left
-        //0x20
-        };  // two up
+        -0x11, // one up one right
+        -0x0F, // one up one left
+        -0x20  // two up
+        };  
     
     int[] bishopMoves = {-0x0F, // one down one right
         -0x11, // one down one left
@@ -80,7 +80,76 @@ public class MoveGenerator {
     int[][] allMoves = {queenMoves,bishopMoves,rookMoves,knightMoves,pawnMovesBLACK,kingMoves,pawnMovesWHITE};
     
     //int COMP_COLOR = 1; //0 = white 1 = black
+    
+    public boolean pawnIsInStartPos(Piece me){
+       if ((me.type & 0x8) == 0){
+        switch (me.position) { //white
+            case 96: 
+            case 97:
+            case 98:
+            case 99:
+            case 100:
+            case 101:
+            case 102:
+            case 103:    
+                return true; 
+            default:
+                return false;             
+        }
+       }else{//Black
+        switch (me.position) { 
+            case 16: 
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+            case 23:    
+                return true; 
+            default:
+                return false;             
+        }           
+       }
+    }
+    
+    public boolean isPawn(Piece me){
+        if((me.type == WHITE_PAWN) || (me.type == BLACK_PAWN)){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean handlePawnDoubbelMove(int currentPos, int offset, Piece me){
         
+        if ((me.type == 0x09 || me.type == 0x01) && (offset == 0x20)){ // er en pawn, den hopper 2
+               //Check if start pos
+               if (pawnIsInStartPos(me) == false){
+                   return false;
+               }
+                
+        }  
+        return true;
+    }
+    public boolean handlePawnDontKillStraight(Board board, Piece me, int currentPos, int offset){
+        
+        if(board.board[(currentPos + offset)] == 0) return true;
+        
+        if ((board.board[(currentPos + offset)] & 0x8) != (me.type & 0x8)){ // har ikke samme farve
+            return false;
+        }  
+        return true;
+    }
+    
+    public boolean handlePawnRightLeftMove(Board board, int currentPos, int offset, Piece me){
+        if ((board.board[(currentPos + offset)] & 0x8) == (me.type & 0x8)){ // har samme farve
+            return false;
+        }  
+         if ((board.board[(currentPos + offset)]) == 0 ){ // er tom
+            return false;
+        }                 
+        return true;
+    }   
     public boolean isValidMove(Board board, int currentPos, int offset, Piece me, boolean isFirst, int color) {
         int lastMove = currentPos - offset;
 
@@ -103,9 +172,25 @@ public class MoveGenerator {
                 return false;
             }  
             
+            if(isPawn(me)){
+
+                if(offset == 0x20 || offset == -0x20){  
+                    if (handlePawnDoubbelMove(currentPos, offset, me) == false){ // er en pawn, den hopper 2
+                        return false;
+                    }
+                }  
+                if(offset == -0x0F || offset == 0x0F || offset == 0x11 || offset == -0x11){  // rigth left move
+                    if (handlePawnRightLeftMove(board, currentPos, offset, me) == false){ // er en pawn, den hopper 2
+                        return false;
+                    }  
+                    return true;
+                }
+                if (handlePawnDontKillStraight(board, me, currentPos, offset) == false ){ //
+                   return false;
+                }
+            }
             return true;
          }
-        
          return false;
     }
     
@@ -146,17 +231,22 @@ public class MoveGenerator {
     // KOM SÅ GITHUBBBB
     
     
-    public Stack<Move> generateMovesPiece(Board board, boolean player, Piece CurrPeace, int offset, boolean isFirst, boolean isSliding, int color) { //0 = white 1 = black
+    public Stack<Move> generateMovesPiece(Board board, boolean player, Piece CurrPeace, int offset, boolean isFirst, boolean isSliding, int color, int... orgPos) { //0 = white 1 = black
         Stack<Move> moves = new Stack<>();
       
                 int currentPos = CurrPeace.getPosition();
                 Piece tempPeace = new Piece(CurrPeace.type,CurrPeace.position);
                 if (isValidMove(board, currentPos, offset, tempPeace, isFirst, color)) {
                     int newpos = currentPos+offset;
-                    moves.add(new Move(currentPos, newpos,CurrPeace));
+                    if(isSliding){
+                        Integer orgp = orgPos.length > 0 ? orgPos[0] : 0;
+                        moves.add(new Move(orgp, newpos, CurrPeace));
+                    }else{
+                        moves.add(new Move(currentPos, newpos, CurrPeace));
+                    }
                     tempPeace.setPosition(newpos);
                     if(isSliding){
-                        moves.addAll(generateMovesPiece(board, player,tempPeace, offset, false, true, color));
+                        moves.addAll(generateMovesPiece(board, player,tempPeace, offset, false, true, color, orgPos));
                     }
                 }
         return moves;
@@ -169,7 +259,7 @@ public class MoveGenerator {
             Piece currentPiece = board.getPiece(index,color);
             for (Integer offset : convertPiceTypeToIntList(currentPiece.type)) {
                 if ((currentPiece.getType() & 0x4) != 0) { // Is sliding pice
-                    moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true, true, color));
+                    moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true, true, color, currentPiece.getPosition()));
                 }else{
                     moves.addAll(generateMovesPiece(board, player,currentPiece, offset, true,false, color));
                 }  
@@ -186,14 +276,16 @@ Stack<Move> moves = new Stack();
         
 MoveGenerator tester = new MoveGenerator();
 Board myBoard = new Board();
+myBoard.populateMe();
 Move tempMove;
 
+    myBoard.Print();
 moves = tester.generateMoves(myBoard, true, 1);
 
 System.out.println("moves.size():" + moves.size());
 while (moves.size() > 0){
   tempMove = moves.pop();
-  System.out.println(Integer.toHexString(tempMove.getPositionTo()));  
+  System.out.println("from" + Integer.toHexString(tempMove.getPositionFrom()) + "to:" + Integer.toHexString(tempMove.getPositionTo()));  
 }
  
 }

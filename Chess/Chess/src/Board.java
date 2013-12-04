@@ -81,7 +81,7 @@ public class Board{
         Piece p14 = new Piece(BLACK_KNIGHT, Integer.parseInt("6", 16));
         Piece p15 = new Piece(BLACK_ROOK, Integer.parseInt("7", 16));     
         
-        Piece p3 = new Piece(BLACK_PAWN, Integer.parseInt("10", 16));
+        Piece p3 = new Piece(BLACK_PAWN, Integer.parseInt("60", 16));
         Piece p4 = new Piece(BLACK_PAWN, Integer.parseInt("11", 16));
         Piece p5 = new Piece(BLACK_PAWN, Integer.parseInt("12", 16));
         Piece p6 = new Piece(BLACK_PAWN, Integer.parseInt("13", 16));
@@ -100,7 +100,7 @@ public class Board{
         board[Integer.parseInt("6", 16)] = BLACK_KNIGHT;
         board[Integer.parseInt("7", 16)] = BLACK_ROOK;
         
-        board[Integer.parseInt("10", 16)] = BLACK_PAWN;
+        board[Integer.parseInt("60", 16)] = BLACK_PAWN;
         board[Integer.parseInt("11", 16)] = BLACK_PAWN;
         board[Integer.parseInt("12", 16)] = BLACK_PAWN;
         board[Integer.parseInt("13", 16)] = BLACK_PAWN;
@@ -134,14 +134,14 @@ public class Board{
         Piece p21 = new Piece(WHITE_QUEEN, Integer.parseInt("74", 16));
         Piece p22 = new Piece(WHITE_BISHOP, Integer.parseInt("72", 16));
         Piece p23 = new Piece(WHITE_KNIGHT, Integer.parseInt("71", 16));
-        Piece p24 = new Piece(WHITE_ROOK, Integer.parseInt("70", 16));
+       // Piece p24 = new Piece(WHITE_ROOK, Integer.parseInt("70", 16));
         
         Piece p25 = new Piece(WHITE_KING, Integer.parseInt("73", 16));
         Piece p26 = new Piece(WHITE_BISHOP, Integer.parseInt("75", 16));
         Piece p27 = new Piece(WHITE_KNIGHT, Integer.parseInt("76", 16));
         Piece p28 = new Piece(WHITE_ROOK, Integer.parseInt("77", 16));     
         
-        Piece p29 = new Piece(WHITE_PAWN, Integer.parseInt("60", 16));
+     //   Piece p29 = new Piece(WHITE_PAWN, Integer.parseInt("60", 16));
         Piece p30 = new Piece(WHITE_PAWN, Integer.parseInt("61", 16));
         Piece p31 = new Piece(WHITE_PAWN, Integer.parseInt("62", 16));
         Piece p32 = new Piece(WHITE_PAWN, Integer.parseInt("63", 16));
@@ -150,7 +150,7 @@ public class Board{
         Piece p35 = new Piece(WHITE_PAWN, Integer.parseInt("66", 16));
         Piece p36 = new Piece(WHITE_PAWN, Integer.parseInt("67", 16));
             
-        board[Integer.parseInt("70", 16)] = WHITE_ROOK;
+       // board[Integer.parseInt("70", 16)] = WHITE_ROOK;
         board[Integer.parseInt("71", 16)] = WHITE_KNIGHT;
         board[Integer.parseInt("72", 16)] = WHITE_BISHOP;
         board[Integer.parseInt("73", 16)] = WHITE_QUEEN;
@@ -158,7 +158,7 @@ public class Board{
         board[Integer.parseInt("75", 16)] = WHITE_BISHOP;
         board[Integer.parseInt("76", 16)] = WHITE_KNIGHT;
         board[Integer.parseInt("77", 16)] = WHITE_ROOK;     
-        board[Integer.parseInt("60", 16)] = WHITE_PAWN;
+       // board[Integer.parseInt("60", 16)] = WHITE_PAWN;
         board[Integer.parseInt("61", 16)] = WHITE_PAWN;
         board[Integer.parseInt("62", 16)] = WHITE_PAWN;
         board[Integer.parseInt("63", 16)] = WHITE_PAWN;
@@ -171,12 +171,12 @@ public class Board{
         PiecesWhite.add(p21);
         PiecesWhite.add(p22);
         PiecesWhite.add(p23);
-        PiecesWhite.add(p24);
+     //   PiecesWhite.add(p24);
         PiecesWhite.add(p25);
         PiecesWhite.add(p26);
         PiecesWhite.add(p27);
         PiecesWhite.add(p28);
-        PiecesWhite.add(p29);
+    //    PiecesWhite.add(p29);
         PiecesWhite.add(p30);
         PiecesWhite.add(p31);
         PiecesWhite.add(p32);
@@ -203,25 +203,65 @@ public class Board{
       }
     } 
     
-    //update board og piece
+    public boolean isPawn(Piece me){
+        if((me.type == WHITE_PAWN) || (me.type == BLACK_PAWN)){
+            return true;
+        }
+        return false;
+    }
+    public boolean PawnIsInOppositeEnd(Piece me){
+        if((me.type == WHITE_PAWN)){
+            if(me.position >= 0 && me.position >= 7){
+                return true;
+            }
+        }else{
+            if((me.position > Integer.parseInt("69", 16)) && (me.position < Integer.parseInt("78", 16))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+   //update board og piece
     public void movePiece(Move move) {
         board[move.getPositionTo()] = board[move.getPositionFrom()];
         board[move.getPositionFrom()] = 0;
+        Piece rmrefb = null;
+        Piece rmrefw = null;
         
         // opdater piecelisten
-        int pos = move.getPositionFrom();
-        
         for (Piece pc : PiecesBlack) {
-            if(pc.getPosition()==pos) {pc.position=(move.positionTo);
-            System.out.println("hej");}
+            // Opdater pladsen brikken kommer fra 
+            if(pc.getPosition() == move.getPositionFrom()) {             
+                pc.position=(move.positionTo);
+                //Check if pawn turns into queen.
+                if(isPawn(pc) && PawnIsInOppositeEnd(pc)){
+                    pc.type = BLACK_QUEEN;
+                    board[pc.position] = BLACK_QUEEN;
+                }
+                System.out.println("flytter sort brik fra: "+ move.getPositionFrom() + " til: "+ move.getPositionTo());}
+            // Opdater hvis der er en brik der bliver slået hjem
+            if(pc.getPosition() == move.getPositionTo()) {
+                rmrefb = pc;
+            }
         }
+        
         for (Piece pc : PiecesWhite) {
-            if(pc.getPosition()==pos) {pc.position=(move.positionTo);
-            System.out.println("hej");}
+            if(pc.getPosition() == move.getPositionFrom()) {
+                pc.position=(move.positionTo);
+                //Check if pawn turns into queen.
+                if(isPawn(pc) && PawnIsInOppositeEnd(pc)){
+                    pc.type = WHITE_QUEEN;
+                    board[pc.position] = WHITE_QUEEN;
+                }
+                System.out.println("flytter hvid brik fra: " + move.getPositionFrom() + " til: "+ move.getPositionTo()); }
+            
+            if(pc.getPosition() == move.getPositionTo()) {
+                rmrefw = pc;
+            }
         }
-        // Der skal tages højde for En passant på en eller anden måde
-        //if (enPassant) removeEnPassant();
-        // if you just made en passant enabling move turn it on here
+        if (rmrefw!=null) PiecesWhite.remove(rmrefw);
+        if (rmrefb!=null) PiecesBlack.remove(rmrefb);
     }
     
     // http://en.wikipedia.org/wiki/Rules_of_chess#Castling
@@ -240,11 +280,11 @@ public class Board{
         int[] cpB = new int[128];
                 
         for (Piece pc : PiecesBlack) {
-            cpBlack.add(pc);
+            cpBlack.add(new Piece(pc.type, pc.position));
         }
         
         for (Piece pc : PiecesWhite) {
-            cpWhite.add(pc);
+            cpWhite.add(new Piece(pc.type, pc.position));
         }
         
         for (int index=0; index<board.length;index++) {

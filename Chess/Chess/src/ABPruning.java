@@ -36,7 +36,7 @@ public static void main (String[] args) {
 	{  
             boolean endOfGAME = false;
             
-            Stack moves = new Stack();
+            Stack<Move> moves = new Stack<>();
             if (endOfGAME){
                   switch (4){
                    case 1:  return inf;
@@ -51,13 +51,11 @@ public static void main (String[] args) {
             moves = myMoveGenerator.generateMoves(board, true, turn);
 
                 
-                for (Object move : moves) {
-                    best_score = inf;                
-                    Board newBoard = new Board();
-                    newBoard = board.copyMe();
-                    
+                for (Move move : moves) {
+                    best_score = inf;        
+                    Board newBoard = board.copyMe();
                     newBoard.movePiece((Move)move);
-                    
+                    newBoard.Print();
                     if (turn == 1) score = alphaBetaMax(alpha, beta, depth-1, turn, newBoard);                               
                     else score = alphaBetaMin(alpha, beta, depth-1, turn, newBoard);                               
                 }    
@@ -69,17 +67,18 @@ public int alphaBetaMax( int alpha, int beta, int depth, int turn, Board board) 
    Stack moves = new Stack();
    
    if (depth == 0){
-    return myEvaluator.evaluateBoard(board, turn);
+    //return myEvaluator.evaluateBoard(board, turn); FEJL TROLES
+       return 10;
    }
    
    turn=(turn==1)?0:1;
    moves = myMoveGenerator.generateMoves(board, true, turn);
-   Board newBoard = new Board();
-   newBoard = board.copyMe();
+   
    
     for (Object move : moves) {
-      newBoard.movePiece((Move)move);
-      score = alphaBetaMin( alpha, beta, depth - 1, turn, newBoard);
+        Board newBoard = board.copyMe();
+        newBoard.movePiece((Move)move);
+        score = alphaBetaMin( alpha, beta, depth - 1, turn, newBoard);
       if( score >= beta )
          return beta;
       if( score > alpha )
@@ -89,7 +88,7 @@ public int alphaBetaMax( int alpha, int beta, int depth, int turn, Board board) 
 }
  
 public int alphaBetaMin( int alpha, int beta, int depth, int turn, Board board) {  
-   Stack moves = new Stack();
+   Stack<Move> moves = new Stack<>();
    
    if (depth == 0){
     return myEvaluator.evaluateBoard(board, turn);
@@ -97,9 +96,9 @@ public int alphaBetaMin( int alpha, int beta, int depth, int turn, Board board) 
    
    turn=(turn==1)?0:1;
    moves = myMoveGenerator.generateMoves(board, true, turn);
-   Board newBoard = new Board();
-   newBoard = board.copyMe();
-    for (Object move : moves) {
+   
+    for (Move move : moves) {
+        Board newBoard = board.copyMe();
         newBoard.movePiece((Move)move);
        score = alphaBetaMax( alpha, beta, depth - 1, turn, newBoard);
       if( score <= alpha )
