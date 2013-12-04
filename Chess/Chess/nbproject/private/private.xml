@@ -7,7 +7,9 @@
             <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/MoveGenerator.java</file>
             <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/Board.java</file>
             <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/Move.java</file>
+            <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/CaptureMove.java</file>
             <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/MinMax.java</file>
+            <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/ABPruning.java</file>
             <file>file:/Users/kristian/Documents/DTU/AI/SKAK/Chess/Chess/src/Evaluator.java</file>
         </group>
     </open-files>
