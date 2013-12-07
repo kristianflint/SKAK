@@ -174,18 +174,18 @@ public class Evaluator {
 
     public int evaluateBoard(Board board, int turn) {
         int noBlackPieces = board.PiecesBlack.size();
-        int noWhitePieces = board.PiecesBlack.size();
+        int noWhitePieces = board.PiecesWhite.size();
         int blackValue = 0;
         int whiteValue = 0;
         boolean endGame = false; // false still midgame, true now in endgame
         
         //identify game state (Mid / End)
-        //endGame = identifyGameState(board.PiecesBlack,board.PiecesWhite);
+        endGame = identifyGameState(board.PiecesBlack,board.PiecesWhite);
         
         // sums up the material and positional values for black
-        for (int index = 0; index < noBlackPieces; index++) {
-            int type = board.PiecesBlack.get(index).getType();
-            int position = board.PiecesBlack.get(index).getPosition();
+        for (Piece pc : board.PiecesBlack){
+            int type = pc.getType();
+            int position = pc.getPosition();
             if (type == BLACK_PAWN)         blackValue += (pawnVal+bPawnPos[position]);
             else if (type == BLACK_KNIGHT)  blackValue += (knightVal+bKnightPos[position]);
             else if (type == BLACK_BISHOP)  blackValue += (bishopVal+bBishopPos[position]);
@@ -198,9 +198,9 @@ public class Evaluator {
         }
         
         // sums up the material and positional values for white
-        for (int index = 0; index < noWhitePieces; index++) {
-            int type = board.PiecesWhite.get(index).getType();
-            int position = board.PiecesWhite.get(index).getPosition();
+        for (Piece pc : board.PiecesWhite){
+            int type = pc.getType();
+            int position = pc.getPosition();
             if (type == WHITE_PAWN)         whiteValue += (pawnVal+wPawnPos[position]);
             else if (type == WHITE_KNIGHT)  whiteValue += (knightVal+wKnightPos[position]);
             else if (type == WHITE_BISHOP)  whiteValue += (bishopVal+wBishopPos[position]);
@@ -223,7 +223,6 @@ public class Evaluator {
             return (whiteValue-blackValue);
         }
         else{
-            
             System.out.println(turn);
             System.out.println("Boardscore: " + (blackValue-whiteValue));
             board.Print();

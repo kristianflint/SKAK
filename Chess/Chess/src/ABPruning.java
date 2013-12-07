@@ -67,8 +67,7 @@ public int alphaBetaMax( int alpha, int beta, int depth, int turn, Board board) 
    Stack moves = new Stack();
    
    if (depth == 0){
-    //return myEvaluator.evaluateBoard(board, turn); FEJL TROLES
-       return 10;
+        return myEvaluator.evaluateBoard(board, turn);
    }
    
    turn=(turn==1)?0:1;
