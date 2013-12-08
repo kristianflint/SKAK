@@ -1,5 +1,4 @@
 
-
 import java.util.Stack;
 
    
@@ -16,6 +15,7 @@ public class ABPruning
   private int best_score;
   private Evaluator myEvaluator = new Evaluator();
   private MoveGenerator myMoveGenerator = new MoveGenerator();
+  private Board GODboard = new Board();
          
 public static void main (String[] args) {
 
@@ -28,12 +28,14 @@ public static void main (String[] args) {
 
   public void pruning(Board board){
       
-      miniMax(1, 1, board);     
+      miniMax(2, 1, board); 
+      System.out.println("GOD BOARD");
+      GODboard.Print();
   
   }
   
-  public int miniMax(int depth, int turn, Board board)
-	{  
+  public int miniMax(int depth, int turn, Board board)  
+        {  
             boolean endOfGAME = false;
             
             Stack<Move> moves = new Stack<>();
@@ -56,14 +58,15 @@ public static void main (String[] args) {
                     Board newBoard = board.copyMe();
                     newBoard.movePiece((Move)move);
                     newBoard.Print();
-                    if (turn == 1) score = alphaBetaMax(alpha, beta, depth-1, turn, newBoard);                               
+                    if (turn == 1) score = alphaBetaMax(alpha, beta, depth-1, turn, newBoard, depth);                               
                     else score = alphaBetaMin(alpha, beta, depth-1, turn, newBoard);                               
                 }    
-  
+            
+             
             return score;
  }
                            
-public int alphaBetaMax( int alpha, int beta, int depth, int turn, Board board) {
+public int alphaBetaMax( int alpha, int beta, int depth, int turn, Board board, int startDepth) {
    Stack moves = new Stack();
    
    if (depth == 0){
@@ -79,9 +82,13 @@ public int alphaBetaMax( int alpha, int beta, int depth, int turn, Board board) 
         newBoard.movePiece((Move)move);
         score = alphaBetaMin( alpha, beta, depth - 1, turn, newBoard);
       if( score >= beta )
-         return beta;
-      if( score > alpha )
-         alpha = score; 
+        return beta;
+      if( score > alpha ){
+        alpha = score; 
+        if(startDepth == depth) {
+            Board GODboard = newBoard.copyMe();
+        }
+      }
    }
    return alpha;
 }
@@ -99,7 +106,7 @@ public int alphaBetaMin( int alpha, int beta, int depth, int turn, Board board) 
     for (Move move : moves) {
         Board newBoard = board.copyMe();
         newBoard.movePiece((Move)move);
-       score = alphaBetaMax( alpha, beta, depth - 1, turn, newBoard);
+       score = alphaBetaMax( alpha, beta, depth - 1, turn, newBoard, depth);
       if( score <= alpha )
          return alpha;
       if( score < beta )
@@ -109,5 +116,3 @@ public int alphaBetaMin( int alpha, int beta, int depth, int turn, Board board) 
 }
 
 }
-
-
