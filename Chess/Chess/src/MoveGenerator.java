@@ -151,11 +151,14 @@ public class MoveGenerator {
         return true;
     }   
     public boolean isValidMove(Board board, int currentPos, int offset, Piece me, boolean isFirst, int color) {
-        int lastMove = currentPos - offset;
+        int lastMove = currentPos; // - offset;
 
         if (!isFirst){  
             if (((lastMove) & 0x88) == 0) { // inside board
-                if((board.board[lastMove] != 0) && (me.getPosition() == lastMove) ){// der stod en på sidste move
+             /*  if(currentPos + offset ==115){
+                System.out.println("HERE:" + board.board[lastMove]);
+                }*/
+                if((board.board[lastMove] != 0 && (me.getPosition() == lastMove) )){// der stod en på sidste move 
                     return false;
                 }
             }

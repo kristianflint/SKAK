@@ -174,11 +174,11 @@ public class Evaluator {
     public int evaluateBoard(Board board, int turn) {
         int blackValue = 0;
         int whiteValue = 0;
-        boolean endGame; // false still midgame, true now in endgame
+        boolean endGame = false; // false still midgame, true now in endgame
         
         //identify game state (Mid / End)
-        endGame = identifyGameState(board.PiecesBlack,board.PiecesWhite);
-        if (endGame) System.out.println("\nendgame reached\n");
+        //endGame = identifyGameState(board.PiecesBlack,board.PiecesWhite);
+        //if (endGame) System.out.println("\nendgame reached\n");
         
         // sums up the material and positional values for black
         for (Piece pc : board.PiecesBlack){
@@ -236,11 +236,11 @@ public class Evaluator {
             System.out.print("\nblack pieces: ");
             for (Piece pc : board.PiecesBlack){System.out.print(pc.type + "@" +pc.position + "  ");}
             System.out.println("");
-            System.out.println("Boardscore: " + (whiteValue-blackValue));
+            System.out.println("Boardscore: " + (blackValue-whiteValue));
             board.Print();
             System.out.println("------------------------------");
             */
-            return (whiteValue-blackValue);
+            return (blackValue-whiteValue);
         
     }
     
