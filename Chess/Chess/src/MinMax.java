@@ -3,8 +3,11 @@ import java.util.Stack;
 public class MinMax {
     static MoveGenerator moveGenerator = new MoveGenerator();
     static Evaluator eval = new Evaluator();
+    Board godBoard = new Board();
+    Piece notToUse = new Piece(1,1);
+    Move godMove = new Move(1,1,notToUse);
     
-    public int minimax(Board node, int depth, boolean maximizingPlayer) { // function minimax(node, depth, maximizingPlayer)
+    public int minimax(Board node, int depth, boolean maximizingPlayer, int start_depth) { // function minimax(node, depth, maximizingPlayer)
         
         int turn;
         if (maximizingPlayer) turn = 0;
@@ -21,8 +24,16 @@ public class MinMax {
             for(Move move : moves) { // skal bare ændres til while loop for at implementere alpha beta :D ?
                 Board newNode = node.copyMe();
                 newNode.movePiece(move);
-                int value = minimax(newNode, depth-1, false);
-                if (value > alpha) alpha = value; // If  V > a  let a = V 
+                int value = minimax(newNode, depth-1, false,start_depth);
+                if (value > alpha){ // If  V > a  let a = V 
+                    alpha = value;
+                    if(depth == start_depth) {
+                        godBoard = newNode.copyMe();
+                        godMove.pieceToMove = move.pieceToMove;
+                        godMove.positionFrom = move.positionFrom;
+                        godMove.positionTo = move.positionTo;
+                    }
+                } 
                 if (beta <= alpha) break;
             } 
             return alpha;
@@ -33,8 +44,10 @@ public class MinMax {
             for(Move move : moves) { // skal bare ændres til while loop for at implementere alpha beta :D ?
                 Board newNode = node.copyMe();
                 newNode.movePiece(move);
-                int value = minimax(newNode, depth-1, true);
-                if (value < beta) beta = value; // If  V < b  let b = V
+                int value = minimax(newNode, depth-1, true, start_depth);
+                if (value < beta){ // If  V < b  let b = V
+                    beta = value;
+                } 
                 if (beta <= beta) break;
             }
             return beta;
@@ -46,6 +59,14 @@ public class MinMax {
     Board newBoard = new Board();
     newBoard.populateMe();
     MinMax minmax = new MinMax();
-    minmax.minimax(newBoard, 6, true); // true = white as max, false = black as max
+    System.out.println("START BOARD");
+    newBoard.Print();
+    minmax.minimax(newBoard, 6, true, 6); // true = white as max, false = black as max
+    System.out.println("GOD BOARD");
+    minmax.godBoard.Print();
+    System.out.println("GOD MOVE");
+   
+    System.out.println("from " + Integer.toHexString(minmax.godMove.getPositionFrom()) + " (.)(.) to: " + Integer.toHexString(minmax.godMove.getPositionTo()));  
+        
     }
 }

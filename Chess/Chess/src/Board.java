@@ -243,10 +243,10 @@ public class Board{
                     pc.type = BLACK_QUEEN;
                     board[pc.position] = BLACK_QUEEN;
                 }
-                System.out.println("flytter sort brik fra: "+ move.getPositionFrom() + " til: "+ move.getPositionTo());               
+                //System.out.println("flytter sort brik fra: "+ move.getPositionFrom() + " til: "+ move.getPositionTo());               
                 for (Piece pc2 : PiecesWhite) {
                     if(pc2.getPosition() == move.getPositionTo()) {
-                    System.out.println("sætter rmrefw");
+                  //  System.out.println("sætter rmrefw");
                         rmrefw = pc2;
                     }
                 }
@@ -263,10 +263,10 @@ public class Board{
                     pc.type = WHITE_QUEEN;
                     board[pc.position] = WHITE_QUEEN;
                 }
-                System.out.println("flytter hvid brik fra: " + move.getPositionFrom() + " til: "+ move.getPositionTo()); 
+                //System.out.println("flytter hvid brik fra: " + move.getPositionFrom() + " til: "+ move.getPositionTo()); 
                  for (Piece pc2 : PiecesBlack) {
                     if(pc2.getPosition() == move.getPositionTo()) {
-                    System.out.println("sætter rmrefb");
+                  //  System.out.println("sætter rmrefb");
                         rmrefb = pc2;
                     }
                 }

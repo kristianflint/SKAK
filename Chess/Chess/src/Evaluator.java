@@ -229,7 +229,7 @@ public class Evaluator {
             
             return (blackValue-whiteValue);
         }*/
-        
+        /*
             System.out.println(turn);
             System.out.print("white pieces: ");
             for (Piece pc : board.PiecesWhite){System.out.print(pc.type + "@" +pc.position + " ");}
@@ -239,7 +239,7 @@ public class Evaluator {
             System.out.println("Boardscore: " + (whiteValue-blackValue));
             board.Print();
             System.out.println("------------------------------");
-            
+            */
             return (whiteValue-blackValue);
         
     }
