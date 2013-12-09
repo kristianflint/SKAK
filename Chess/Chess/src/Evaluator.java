@@ -240,7 +240,7 @@ public class Evaluator {
             board.Print();
             System.out.println("------------------------------");
             */
-            return (whiteValue-blackValue);
+            return (blackValue-whiteValue);
         
     }
     

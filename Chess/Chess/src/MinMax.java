@@ -20,7 +20,7 @@ public class MinMax {
         if (depth == 0) return (eval.evaluateBoard(node, turn));// if depth = 0 or node is a terminal node, return the heuristic value of node
         
         if (maximizingPlayer) {
-            Stack<Move> moves = moveGenerator.generateMoves(node, true, 0);
+            Stack<Move> moves = moveGenerator.generateMoves(node, true, 1);
 
             for(Move move : moves) { // skal bare ændres til while loop for at implementere alpha beta :D ?
                 Board newNode = node.copyMe();
@@ -40,7 +40,7 @@ public class MinMax {
             return alpha;
         }
         else {
-            Stack<Move> moves = moveGenerator.generateMoves(node, true, 1);
+            Stack<Move> moves = moveGenerator.generateMoves(node, true, 0);
             
             for(Move move : moves) { // skal bare ændres til while loop for at implementere alpha beta :D ?
                 Board newNode = node.copyMe();
@@ -77,11 +77,6 @@ public class MinMax {
     
     while(true){
      
-    System.out.println("Computer Moves:");
-    minmax.minimax(tempBoard, 4, true, 4);
-    tempBoard = minmax.godBoard.copyMe();
-    tempBoard.Print();   
-        
      System.out.println("Your move:");
      i = sc.nextLine();
      k = sc.nextLine();
@@ -100,7 +95,10 @@ public class MinMax {
      tempBoard.movePiece(new Move(Integer.parseInt(i, 16),Integer.parseInt(k, 16), new Piece(1,1)));
      tempBoard.Print();
      
-
+    System.out.println("Computer Moves:");
+    minmax.minimax(tempBoard, 4, true, 4);
+    tempBoard = minmax.godBoard.copyMe();
+    tempBoard.Print();
     
     e = eval.evaluateBoard(tempBoard, 1);
     System.out.println("evaluering: " + e);
