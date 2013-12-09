@@ -41,8 +41,8 @@ public class Evaluator {
     int bishopVal = 330;
     int pawnVal = 100;
 
-    // Black Positional Values (from simplified values)
-    int[] bPawnPos = {   0,  0,  0,  0,  0,  0,  0,  0,     0,  0,  0,  0,  0,  0,  0,  0,
+    // White Positional Values (from simplified values)
+    int[] wPawnPos = {   0,  0,  0,  0,  0,  0,  0,  0,     0,  0,  0,  0,  0,  0,  0,  0,
                         50, 50, 50, 50, 50, 50, 50, 50,     0,  0,  0,  0,  0,  0,  0,  0,
                         10, 10, 20, 30, 30, 20, 10, 10,     0,  0,  0,  0,  0,  0,  0,  0,
                         5,  5, 10, 25, 25, 10,  5,  5,      0,  0,  0,  0,  0,  0,  0,  0,
@@ -51,7 +51,7 @@ public class Evaluator {
                         5, 10, 10,-20,-20, 10, 10,  5,      0,  0,  0,  0,  0,  0,  0,  0,
                         0,  0,  0,  0,  0,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0};
     
-    int bKnightPos[] = { -50,-40,-30,-30,-30,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0,
+    int wKnightPos[] = { -50,-40,-30,-30,-30,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0,
                         -40,-20,  0,  0,  0,  0,-20,-40,    0,  0,  0,  0,  0,  0,  0,  0,
                         -30,  0, 10, 15, 15, 10,  0,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                         -30,  5, 15, 20, 20, 15,  5,-30,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -60,7 +60,7 @@ public class Evaluator {
                         -40,-20,  0,  5,  5,  0,-20,-40,    0,  0,  0,  0,  0,  0,  0,  0,
                         -50,-40,-30,-30,-30,-30,-40,-50,    0,  0,  0,  0,  0,  0,  0,  0};
     
-    int bBishopPos[] = { -20,-10,-10,-10,-10,-10,-10,-20,   0,  0,  0,  0,  0,  0,  0,  0,
+    int wBishopPos[] = { -20,-10,-10,-10,-10,-10,-10,-20,   0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  0,  0,  0,  0,  0,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  0,  5, 10, 10,  5,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  5,  5, 10, 10,  5,  5,-10,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -69,7 +69,7 @@ public class Evaluator {
                         -10,  5,  0,  0,  0,  0,  5,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -20,-10,-10,-10,-10,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0};
     
-    int bRookPos[] = {   0,  0,  0,  0,  0,  0,  0,  0,     0,  0,  0,  0,  0,  0,  0,  0,
+    int wRookPos[] = {   0,  0,  0,  0,  0,  0,  0,  0,     0,  0,  0,  0,  0,  0,  0,  0,
                         5, 10, 10, 10, 10, 10, 10,  5,      0,  0,  0,  0,  0,  0,  0,  0,
                         -5,  0,  0,  0,  0,  0,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
                         -5,  0,  0,  0,  0,  0,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
@@ -78,7 +78,7 @@ public class Evaluator {
                         -5,  0,  0,  0,  0,  0,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
                         0,  0,  0,  5,  5,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0};  
     
-    int bQueenPos[] = { -20,-10,-10, -5, -5,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0,
+    int wQueenPos[] = { -20,-10,-10, -5, -5,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  0,  0,  0,  0,  0,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  0,  5,  5,  5,  5,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -5,  0,  5,  5,  5,  5,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
@@ -87,7 +87,7 @@ public class Evaluator {
                         -10,  0,  5,  0,  0,  0,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -20,-10,-10, -5, -5,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0};
     
-    int bKingPosMid[] = {    -30,-40,-40,-50,-50,-40,-40,-30,   0,  0,  0,  0,  0,  0,  0,  0,
+    int wKingPosMid[] = {    -30,-40,-40,-50,-50,-40,-40,-30,   0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-40,-40,-50,-50,-40,-40,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-40,-40,-50,-50,-40,-40,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-40,-40,-50,-50,-40,-40,-30,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -96,7 +96,7 @@ public class Evaluator {
                             20, 20,  0,  0,  0,  0, 20, 20,     0,  0,  0,  0,  0,  0,  0,  0,
                             20, 30, 10,  0,  0, 10, 30, 20,     0,  0,  0,  0,  0,  0,  0,  0};
     
-    int bKingPosEnd[] = {    -50,-40,-30,-20,-20,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0,
+    int wKingPosEnd[] = {    -50,-40,-30,-20,-20,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-20,-10,  0,  0,-10,-20,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-10, 20, 30, 30, 20,-10,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-10, 30, 40, 40, 30,-10,-30,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -107,7 +107,7 @@ public class Evaluator {
     
     
     // White Positional Values: White Values Reversed!
-    int wPawnPos[] = {  0,  0,  0,  0,  0,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0,
+    int bPawnPos[] = {  0,  0,  0,  0,  0,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0,
                         5, 10, 10,-20,-20, 10, 10,  5,      0,  0,  0,  0,  0,  0,  0,  0,
                         5, -5,-10,  0,  0,-10, -5,  5,      0,  0,  0,  0,  0,  0,  0,  0,
                         0,  0,  0, 20, 20,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0,
@@ -116,7 +116,7 @@ public class Evaluator {
                         50, 50, 50, 50, 50, 50, 50, 50,     0,  0,  0,  0,  0,  0,  0,  0,
                         0,  0,  0,  0,  0,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0};
     
-    int wKnightPos[] = { -50,-40,-30,-30,-30,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0,
+    int bKnightPos[] = { -50,-40,-30,-30,-30,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0,
                          -40,-20,  0,  5,  5,  0,-20,-40,   0,  0,  0,  0,  0,  0,  0,  0,
                          -30,  5, 10, 15, 15, 10,  5,-30,   0,  0,  0,  0,  0,  0,  0,  0,
                          -30,  0, 15, 20, 20, 15,  0,-30,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -125,7 +125,7 @@ public class Evaluator {
                          -40,-20,  0,  0,  0,  0,-20,-40,   0,  0,  0,  0,  0,  0,  0,  0,
                          -50,-40,-30,-30,-30,-30,-40,-50,   0,  0,  0,  0,  0,  0,  0,  0};
     
-    int wBishopPos[] = { -20,-10,-10,-10,-10,-10,-10,-20,   0,  0,  0,  0,  0,  0,  0,  0,
+    int bBishopPos[] = { -20,-10,-10,-10,-10,-10,-10,-20,   0,  0,  0,  0,  0,  0,  0,  0,
                          -10,  5,  0,  0,  0,  0,  5,-10,   0,  0,  0,  0,  0,  0,  0,  0,
                          -10, 10, 10, 10, 10, 10, 10,-10,   0,  0,  0,  0,  0,  0,  0,  0,
                          -10,  0, 10, 10, 10, 10,  0,-10,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -134,7 +134,7 @@ public class Evaluator {
                          -10,  0,  0,  0,  0,  0,  0,-10,   0,  0,  0,  0,  0,  0,  0,  0,
                          -20,-10,-10,-10,-10,-10,-10,-20,   0,  0,  0,  0,  0,  0,  0,  0};
     
-    int wRookPos[] = {   0,  0,  0,  0,  0,  0,  0,  0,     0,  0,  0,  0,  0,  0,  0,  0,
+    int bRookPos[] = {   0,  0,  0,  0,  0,  0,  0,  0,     0,  0,  0,  0,  0,  0,  0,  0,
                         -5,  0,  0,  0,  0,  0,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
                         -5,  0,  0,  0,  0,  0,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
                         -5,  0,  0,  0,  0,  0,  0, -5,     0,  0,  0,  0,  0,  0,  0,  0,
@@ -143,7 +143,7 @@ public class Evaluator {
                         5, 10, 10, 10, 10, 10, 10,  5,      0,  0,  0,  0,  0,  0,  0,  0,
                         0,  0,  0,  5,  5,  0,  0,  0,      0,  0,  0,  0,  0,  0,  0,  0};  
     
-    int wQueenPos[] = { -20,-10,-10, -5, -5,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0,
+    int bQueenPos[] = { -20,-10,-10, -5, -5,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  0,  5,  0,  0,  0,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -10,  5,  5,  5,  5,  5,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                           0,  0,  5,  5,  5,  5,  0, -5,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -152,7 +152,7 @@ public class Evaluator {
                         -10,  0,  0,  0,  0,  0,  0,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                         -20,-10,-10, -5, -5,-10,-10,-20,    0,  0,  0,  0,  0,  0,  0,  0};  
     
-    int wKingPosMid[] = {   20, 30, 10,  0,  0, 10, 30, 20,     0,  0,  0,  0,  0,  0,  0,  0,
+    int bKingPosMid[] = {   20, 30, 10,  0,  0, 10, 30, 20,     0,  0,  0,  0,  0,  0,  0,  0,
                             20, 20,  0,  0,  0,  0, 20, 20,     0,  0,  0,  0,  0,  0,  0,  0,
                             -10,-20,-20,-20,-20,-20,-20,-10,    0,  0,  0,  0,  0,  0,  0,  0,
                             -20,-30,-30,-40,-40,-30,-30,-20,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -161,7 +161,7 @@ public class Evaluator {
                             -30,-40,-40,-50,-50,-40,-40,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-40,-40,-50,-50,-40,-40,-30,    0,  0,  0,  0,  0,  0,  0,  0}; 
 
-    int wKingPosEnd[] = {   -50,-30,-30,-30,-30,-30,-30,-50,    0,  0,  0,  0,  0,  0,  0,  0,
+    int bKingPosEnd[] = {   -50,-30,-30,-30,-30,-30,-30,-50,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-30,  0,  0,  0,  0,-30,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-10, 20, 30, 30, 20,-10,-30,    0,  0,  0,  0,  0,  0,  0,  0,
                             -30,-10, 30, 40, 40, 30,-10,-30,    0,  0,  0,  0,  0,  0,  0,  0,
@@ -172,14 +172,13 @@ public class Evaluator {
     
 
     public int evaluateBoard(Board board, int turn) {
-        int noBlackPieces = board.PiecesBlack.size();
-        int noWhitePieces = board.PiecesWhite.size();
         int blackValue = 0;
         int whiteValue = 0;
-        boolean endGame = false; // false still midgame, true now in endgame
+        boolean endGame; // false still midgame, true now in endgame
         
         //identify game state (Mid / End)
         endGame = identifyGameState(board.PiecesBlack,board.PiecesWhite);
+        if (endGame) System.out.println("\nendgame reached\n");
         
         // sums up the material and positional values for black
         for (Piece pc : board.PiecesBlack){
@@ -203,15 +202,16 @@ public class Evaluator {
             if (type == WHITE_PAWN)         whiteValue += (pawnVal+wPawnPos[position]);
             else if (type == WHITE_KNIGHT)  whiteValue += (knightVal+wKnightPos[position]);
             else if (type == WHITE_BISHOP)  whiteValue += (bishopVal+wBishopPos[position]);
-            else if (type == WHITE_ROOK)    whiteValue += (rookVal+bRookPos[position]);
-            else if (type == WHITE_QUEEN)   whiteValue += (queenVal+bQueenPos[position]);
+            else if (type == WHITE_ROOK)    whiteValue += (rookVal+wRookPos[position]);
+            else if (type == WHITE_QUEEN)   whiteValue += (queenVal+wQueenPos[position]);
             else if (type == WHITE_KING) {
                     if (!endGame)       whiteValue += (kingVal+wKingPosMid[position]);
-                    else if (endGame)   whiteValue += (kingVal+wKingPosMid[position]);
+                    else if (endGame)   whiteValue += (kingVal+wKingPosEnd[position]);
             }
         }
         
         // positive value is in favor of white negative is in favor of black
+        /**
         if (turn==0){
             
             System.out.println(turn);
@@ -228,7 +228,19 @@ public class Evaluator {
             System.out.println("------------------------------");
             
             return (blackValue-whiteValue);
-        }
+        }*/
+        
+            System.out.println(turn);
+            System.out.print("white pieces: ");
+            for (Piece pc : board.PiecesWhite){System.out.print(pc.type + "@" +pc.position + " ");}
+            System.out.print("\nblack pieces: ");
+            for (Piece pc : board.PiecesBlack){System.out.print(pc.type + "@" +pc.position + "  ");}
+            System.out.println("");
+            System.out.println("Boardscore: " + (whiteValue-blackValue));
+            board.Print();
+            System.out.println("------------------------------");
+            
+            return (whiteValue-blackValue);
         
     }
     

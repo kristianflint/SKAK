@@ -1,4 +1,7 @@
+
 import java.util.ArrayList;
+
+//import java.util.ArrayList;
 
 public class Board{
     
@@ -26,8 +29,8 @@ public class Board{
      */
     
     int[] board = new int[128];
-    ArrayList<Piece> PiecesWhite = new ArrayList();
-    ArrayList<Piece> PiecesBlack = new ArrayList();
+    ArrayList<Piece> PiecesWhite = new ArrayList<>();
+    ArrayList<Piece> PiecesBlack = new ArrayList<>();
     
     int BLACK_QUEEN = 0x0F;
     int BLACK_BISHOP = 0x0D;
@@ -240,11 +243,16 @@ public class Board{
                     pc.type = BLACK_QUEEN;
                     board[pc.position] = BLACK_QUEEN;
                 }
-                System.out.println("flytter sort brik fra: "+ move.getPositionFrom() + " til: "+ move.getPositionTo());}
-            // Opdater hvis der er en brik der bliver slået hjem
-            if(pc.getPosition() == move.getPositionTo()) {
-                rmrefb = pc;
+                System.out.println("flytter sort brik fra: "+ move.getPositionFrom() + " til: "+ move.getPositionTo());               
+                for (Piece pc2 : PiecesWhite) {
+                    if(pc2.getPosition() == move.getPositionTo()) {
+                    System.out.println("sætter rmrefw");
+                        rmrefw = pc2;
+                    }
+                }
+                
             }
+            // Opdater hvis der er en brik der bliver slået hjem
         }
         
         for (Piece pc : PiecesWhite) {
@@ -255,10 +263,13 @@ public class Board{
                     pc.type = WHITE_QUEEN;
                     board[pc.position] = WHITE_QUEEN;
                 }
-                System.out.println("flytter hvid brik fra: " + move.getPositionFrom() + " til: "+ move.getPositionTo()); }
-            
-            if(pc.getPosition() == move.getPositionTo()) {
-                rmrefw = pc;
+                System.out.println("flytter hvid brik fra: " + move.getPositionFrom() + " til: "+ move.getPositionTo()); 
+                 for (Piece pc2 : PiecesBlack) {
+                    if(pc2.getPosition() == move.getPositionTo()) {
+                    System.out.println("sætter rmrefb");
+                        rmrefb = pc2;
+                    }
+                }
             }
         }
         if (rmrefw!=null) PiecesWhite.remove(rmrefw);
