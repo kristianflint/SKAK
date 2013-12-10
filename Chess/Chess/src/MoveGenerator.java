@@ -273,6 +273,7 @@ public class MoveGenerator {
     }
       
            
+/** 
 public static void main (String[] args) {
 System.out.println( "WHAT!?" + (BLACK_PAWN & 0x8));
 Stack<Move> moves = new Stack();
@@ -289,8 +290,9 @@ System.out.println("moves.size():" + moves.size());
 while (moves.size() > 0){
   tempMove = moves.pop();
   System.out.println("from" + Integer.toHexString(tempMove.getPositionFrom()) + "to:" + Integer.toHexString(tempMove.getPositionTo()));  
-}
+
  
 }
+*/
 
 }

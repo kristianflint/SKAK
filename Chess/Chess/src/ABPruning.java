@@ -16,7 +16,8 @@ public class ABPruning
   private Evaluator myEvaluator = new Evaluator();
   private MoveGenerator myMoveGenerator = new MoveGenerator();
   private Board GODboard = new Board();
-         
+   
+  /**
 public static void main (String[] args) {
 
   Board newBoard = new Board();
@@ -24,7 +25,7 @@ public static void main (String[] args) {
   ABPruning newABPruning = new ABPruning();
   newABPruning.pruning(newBoard);
     
-}
+}*/
 
   public void pruning(Board board){
       

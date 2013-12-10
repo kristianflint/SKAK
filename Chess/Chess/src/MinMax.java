@@ -100,11 +100,11 @@ public class MinMax {
     tempBoard = minmax.godBoard.copyMe();
     tempBoard.Print();
     
-    e = eval.evaluateBoard(tempBoard, 1);
-    System.out.println("evaluering: " + e);
+    //e = eval.evaluateBoard(tempBoard, 1);
+    //System.out.println("evaluering: " + e);
     
     //System.out.println("GOD MOVE");
-    //System.out.println("from " + Integer.toHexString(minmax.godMove.getPositionFrom()) + " (.)(.) to: " + Integer.toHexString(minmax.godMove.getPositionTo()));  
+    System.out.println("GOD MOVE: from " + Integer.toHexString(minmax.godMove.getPositionFrom()) + " (.)(.) to: " + Integer.toHexString(minmax.godMove.getPositionTo()));  
     
 
     }

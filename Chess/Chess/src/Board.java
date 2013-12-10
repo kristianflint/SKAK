@@ -135,12 +135,12 @@ public class Board{
         
         //WHITE
           
-        Piece p21 = new Piece(WHITE_QUEEN, Integer.parseInt("73", 16));;
+        Piece p21 = new Piece(WHITE_QUEEN, Integer.parseInt("74", 16));
         Piece p22 = new Piece(WHITE_BISHOP, Integer.parseInt("72", 16));
         Piece p23 = new Piece(WHITE_KNIGHT, Integer.parseInt("71", 16));
         Piece p24 = new Piece(WHITE_ROOK, Integer.parseInt("70", 16));
         
-        Piece p25 = new Piece(WHITE_KING, Integer.parseInt("74", 16));
+        Piece p25 = new Piece(WHITE_KING, Integer.parseInt("73", 16));
         Piece p26 = new Piece(WHITE_BISHOP, Integer.parseInt("75", 16));
         Piece p27 = new Piece(WHITE_KNIGHT, Integer.parseInt("76", 16));
         Piece p28 = new Piece(WHITE_ROOK, Integer.parseInt("77", 16));     
