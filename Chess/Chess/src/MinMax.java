@@ -78,7 +78,7 @@ public class MinMax {
     while(true){
      
     System.out.println("Computer Moves:");
-    minmax.minimax(tempBoard, 4, true, 4);
+    minmax.minimax(tempBoard, 5, true, 5);
     tempBoard = minmax.godBoard.copyMe();
     tempBoard.Print();   
         
